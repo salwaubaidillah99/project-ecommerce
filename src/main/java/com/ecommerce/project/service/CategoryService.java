@@ -32,8 +32,6 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
-
-
     public void deleteById (String id){
         categoryRepository.deleteById(id);
     }

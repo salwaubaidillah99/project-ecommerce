@@ -10,6 +10,7 @@ import java.util.TimeZone;
 @Entity
 @Data
 public class Category implements Serializable {
+
     @Id
     private String id;
     private String name_category;
@@ -23,8 +24,8 @@ public class Category implements Serializable {
     protected void  onCreate(){
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jakarta"));
         createdAt= new Date();
-
     }
+
     @PreUpdate
     protected void onUpdate(){
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Jakarta"));

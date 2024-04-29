@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class CategoryController {
+
     @Autowired
     private CategoryService categoryService;
 
@@ -17,14 +18,17 @@ public class CategoryController {
     public List<Category> findAll(){
         return categoryService.findAll();
     }
+
     @GetMapping("/category/{id}")
     public Category findById(@PathVariable("id") String id){
         return categoryService.findById(id);
     }
+
     @PostMapping("/category/create")
     public Category create(@RequestBody Category category){
         return categoryService.createdCategory(category);
     }
+
     @PutMapping("/category/edit/{id}")
     public Category edit(@PathVariable("id") String id, @RequestBody Category updatedCategory){
         updatedCategory.setId(id);

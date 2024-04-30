@@ -34,20 +34,20 @@ public class ProductService {
 
     public Response createProduct(Product product) {
         if (!StringUtils.hasText(product.getName_product())) {
-            throw new BadRequestException("Nama produk tidak boleh kosong");
+            throw new BadRequestException("The product name cannot be empty.");
         }
 
         if (product.getCategory() == null) {
-            throw new BadRequestException("Kategori tidak boleh kosong");
+            throw new BadRequestException("The category cannot be empty");
         }
 
         if (!StringUtils.hasText(product.getCategory().getId())) {
-            throw new BadRequestException("Kategori ID tidak boleh kosong");
+            throw new BadRequestException("The category ID cannot be empty");
         }
 
         categoryRepository.findById(product.getCategory().getId())
                 .orElseThrow(() -> new BadRequestException(
-                        "Kategori ID " + product.getCategory().getId() + " tidak ditemukan dalam database"));
+                        "The category with ID " + product.getCategory().getId() + "was not found in the database"));
         Random random = new Random();
         int randomNumber = random.nextInt(1000);
         String id = "product" + randomNumber;
@@ -55,7 +55,6 @@ public class ProductService {
         product.setCreatedAt(new Date());
         product.setUpdateAt(null);
         product.setId(id);
-//        product.setId(UUID.randomUUID().toString());
         Product createdProduct = productRepository.save(product);
 
         return new Response(createdProduct, "Product successfully created", HttpStatus.CREATED);

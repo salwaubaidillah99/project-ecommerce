@@ -48,7 +48,6 @@ public class CategoryService {
         return new Response(createdCategory, "Category successfully created", HttpStatus.CREATED);
     }
 
-
     public Response deleteById(String id) {
         Optional<Category> categoryOptional = categoryRepository.findById(id);
         if (categoryOptional.isPresent()) {
@@ -75,5 +74,4 @@ public class CategoryService {
             throw new ResourceNotFoundException("Category with ID " + updatedCategory.getId() + "not found!");
         }
     }
-
 }

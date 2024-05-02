@@ -1,5 +1,6 @@
 package com.ecommerce.project.service;
 
+import com.ecommerce.project.entity.Category;
 import com.ecommerce.project.entity.Product;
 import com.ecommerce.project.exception.BadRequestException;
 import com.ecommerce.project.exception.ResourceNotFoundException;
@@ -13,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -60,6 +62,35 @@ public class ProductService {
         return new Response(createdProduct, "Product successfully created", HttpStatus.CREATED);
 
     }
+
+    public Response editProduct(Product product) {
+        if (!StringUtils.hasText(product.getName_product())) {
+            throw new BadRequestException("Nama produk tidak boleh kosong.");
+        }
+
+        if (product.getCategory() == null || !StringUtils.hasText(product.getCategory().getId())) {
+            throw new BadRequestException("ID kategori produk tidak boleh kosong");
+        }
+
+        Category category = categoryRepository.findById(product.getCategory().getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Kategori dengan ID " + product.getCategory().getId() + " tidak ditemukan dalam database"));
+
+        Product existingProduct = productRepository.findById(product.getId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Produk dengan ID " + product.getId() + " tidak ditemukan!"));
+
+        existingProduct.setName_product(product.getName_product());
+        existingProduct.setStock_quantity(product.getStock_quantity());
+        existingProduct.setPrice(product.getPrice());
+        existingProduct.setUpdateAt(new Date());
+
+        existingProduct.setCategory(category);
+        Product editedProduct = productRepository.save(existingProduct);
+
+        return new Response(editedProduct, "Produk berhasil diperbarui", HttpStatus.OK);
+    }
+
 
 
 

@@ -91,6 +91,28 @@ public class ProductService {
         return new Response(editedProduct, "Produk berhasil diperbarui", HttpStatus.OK);
     }
 
+    public  Response findById (String id){
+        Optional<Product>productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()){
+            Product findProduct = productOptional.get();
+            productRepository.findById(id);
+            return  new Response(findProduct, "The product with ID " +id+ " has been found", HttpStatus.OK);
+        } else  {
+            throw new ResourceNotFoundException("The product with ID " +id+ " not found!");
+        }
+    }
+
+    public Response deleteById(String id){
+        Optional<Product> productOptional = productRepository.findById(id);
+        if (productOptional.isPresent()){
+            Product deletedProduct = productOptional.get();
+            productRepository.deleteById(id);
+            return  new Response(deletedProduct, "The product with ID" +id+ " has been successfullt deleted.", HttpStatus.OK);
+        } else  {
+            throw new ResourceNotFoundException("Product with ID" +id+ "not found!");
+        }
+    }
+
 
 
 

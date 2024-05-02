@@ -41,5 +41,17 @@ public class ProductController {
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(null, e.getMessage(), HttpStatus.NOT_FOUND));
         }
-    }//done
+    }
+
+    @GetMapping ("/product/{id}")
+    public  ResponseEntity<Response> findById (@PathVariable("id") String id){
+        Response response = productService.findById(id);
+        return  new ResponseEntity<>(response, response.getStatus());
+    }
+
+    @DeleteMapping ("/product/delete/{id}")
+    public ResponseEntity<Response> deleteById (@PathVariable ("id") String id){
+        Response response = productService.deleteById(id);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
 }

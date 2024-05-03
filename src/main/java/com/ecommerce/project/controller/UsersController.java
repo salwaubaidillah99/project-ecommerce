@@ -27,9 +27,9 @@ public class UsersController {
         return  new ResponseEntity<>(response, response.getStatus());
     }
 
-    @PostMapping("/users/create")
-    public ResponseEntity<Response>createUsers (@RequestBody Users users){
-        Response response = usersService.createUsers(users);
+    @PostMapping("/users/register")
+    public ResponseEntity<Response>registerUser (@RequestBody Users users){
+        Response response = usersService.registerUser(users);
         return new ResponseEntity<>(response, response.getStatus());
     }
 
@@ -37,7 +37,7 @@ public class UsersController {
     public  ResponseEntity<Response>editUsers (@PathVariable("id") String id, @RequestBody Users updatedUsers){
         updatedUsers.setId(id);
         try{
-        Response response = usersService.editUsers(updatedUsers);
+        Response response = usersService.editUser(updatedUsers);
         return  ResponseEntity.ok().body(response);
         } catch (ResourceNotFoundException e){
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(null, e.getMessage(), HttpStatus.NOT_FOUND));
@@ -47,6 +47,12 @@ public class UsersController {
     @DeleteMapping("/users/delete/{id}")
     public ResponseEntity<Response>deleteUser (@PathVariable("id") String id){
         Response response = usersService.deleteById(id);
+        return new ResponseEntity<>(response, response.getStatus());
+    }
+
+    @PostMapping ("/users/login")
+    public  ResponseEntity<Response>loginUser(@RequestBody Users users){
+        Response response = usersService.loginUser(users);
         return new ResponseEntity<>(response, response.getStatus());
     }
 }

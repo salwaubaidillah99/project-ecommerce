@@ -36,7 +36,11 @@ public class UserDetailImpl implements UserDetails {
     }
 
     public static UserDetailImpl build (Users users){
-        return new UserDetailImpl(users.getId(), users.getUsername(), users.getEmail(), users.getPassword(), users.getUser_role());
+        return new UserDetailImpl(users.getId(),
+                                  users.getUsername(),
+                                  users.getEmail(),
+                                  users.getPassword(),
+                                  users.getUser_role());
     }
 
     @Override

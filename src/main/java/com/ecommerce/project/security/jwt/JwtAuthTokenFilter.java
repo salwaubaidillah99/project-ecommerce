@@ -54,7 +54,6 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
                 && headerAuth.startsWith("Bearer ")) {
             return headerAuth.substring(7, headerAuth.length());
         }
-
         return null;
     }
 
